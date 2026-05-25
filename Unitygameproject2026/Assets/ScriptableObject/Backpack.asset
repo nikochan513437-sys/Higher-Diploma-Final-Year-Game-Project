@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c899040a18e7e4c4db0f15f8a646d9ff, type: 3}
+  m_Name: Backpack
+  m_EditorClassIdentifier: 
+  moduleList:
+  - {fileID: 11400000, guid: 1bd447f4870d90e4e94ae249d3799068, type: 2}
+  - {fileID: 11400000, guid: 1bd447f4870d90e4e94ae249d3799068, type: 2}
+  - {fileID: 11400000, guid: 1bd447f4870d90e4e94ae249d3799068, type: 2}
+  - {fileID: 11400000, guid: 1bd447f4870d90e4e94ae249d3799068, type: 2}
+  - {fileID: 11400000, guid: 1bd447f4870d90e4e94ae249d3799068, type: 2}
+  - {fileID: 11400000, guid: 1bd447f4870d90e4e94ae249d3799068, type: 2}
+  - {fileID: 11400000, guid: 1bd447f4870d90e4e94ae249d3799068, type: 2}

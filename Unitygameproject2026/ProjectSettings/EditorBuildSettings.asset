@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/SceneStart.scene
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/TutorialCG.scene
+    guid: 5620e4611b428a74f971b6dcefa73dcd
+  - enabled: 1
+    path: Assets/Scenes/TutorialMap.scene
+    guid: b2d1c95b8cf93c249b31d905e9636c17
+  - enabled: 1
+    path: Assets/Scenes/Fighting.scene
+    guid: 35bfc34feb2400d4b9fe2fc303ffa729
+  - enabled: 1
+    path: Assets/Scenes/Event.scene
+    guid: 54233489762ecf543a062fa1ee8e862d
+  - enabled: 1
+    path: Assets/Scenes/Shop.scene
+    guid: dcbfe3ad128ffd74dace56d3d235381f
+  m_BuildProfiles: []
+  m_configObjects: {}
+  m_SlimFeaturesWeixinMiniGame:
+    AllocateOverhead: 1
+    DecompressASTC: 0
+    DecompressDXT: 1
+    DecompressETC: 1
+    FreeTypeSfntPng: 1
+    LightProbe: 2
+    UseStringInternPool: 2
