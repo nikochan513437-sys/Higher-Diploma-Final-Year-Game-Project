@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a21fa5fc83dd1a4d9d8efb2c9198056, type: 3}
+  m_Name: MapPointImage
+  m_EditorClassIdentifier: 
+  List:
+  - {fileID: 21300000, guid: 6eb642ba78a99c24289bbe9e6299dced, type: 3}
+  - {fileID: 21300000, guid: e71242ba8a260114e9e74b475f36e82e, type: 3}
+  - {fileID: 21300000, guid: 3c7bfb9fe5ff71b41904a22e3cf7f796, type: 3}
+  - {fileID: 21300000, guid: cd247e9f687ad594ba3d3d05e3550cca, type: 3}
+  - {fileID: 21300000, guid: c485b5fcb7f0fca4d891e8e29f773734, type: 3}
+  - {fileID: 21300000, guid: 04a93c5958183c44587bc7ab9f1c38e4, type: 3}

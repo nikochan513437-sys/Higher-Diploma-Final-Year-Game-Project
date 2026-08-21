@@ -17,8 +17,12 @@ public class SwitchSceneDontDestroy : MonoBehaviour
     {
         if (scene.name == "SceneStart")
         {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
             Destroy(gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

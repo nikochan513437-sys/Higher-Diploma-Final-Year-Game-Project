@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SceneStart.scene
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/GameMap.scene
+    guid: 96df1de2b82dd564bafd36b27c37400a
+  - enabled: 1
     path: Assets/Scenes/TutorialCG.scene
     guid: 5620e4611b428a74f971b6dcefa73dcd
   - enabled: 1

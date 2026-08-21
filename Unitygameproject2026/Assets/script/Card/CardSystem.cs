@@ -9,7 +9,7 @@ public class CardSystem : MonoBehaviour
 {
     [SerializeField] private int maxHandsize;
 
-    [SerializeField] private CardList cardList;
+    [SerializeField] private CreateNewList cardList;
 
     [SerializeField] private SplineContainer splineContainer;
 
@@ -30,9 +30,10 @@ public class CardSystem : MonoBehaviour
         else
             Destroy(gameObject);
     }
+   
 
     public void SpawnCardByIndex(int index) {
-        cardPrefab = cardList.cardList[index];
+        cardPrefab = cardList.List[index];
     }
 
     public void DrawCard() {
@@ -50,7 +51,7 @@ public class CardSystem : MonoBehaviour
         cards.Clear();
     }
 
-    private void UpdateCardPositions()
+    public void UpdateCardPositions()
     {
         if (cards.Count == 0)
             return;

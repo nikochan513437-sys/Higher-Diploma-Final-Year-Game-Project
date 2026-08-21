@@ -13,7 +13,7 @@ public class TutorialButtonEffect : MonoBehaviour
         if (!panel.activeSelf)
         {
             Debug.Log("clicked on");
-            ResetTutorial.Reset();
+            Reset.reset();
             SceneManager.LoadScene(loadto);
         }
     }

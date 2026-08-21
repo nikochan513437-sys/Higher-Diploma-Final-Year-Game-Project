@@ -9,7 +9,7 @@ public class BossButton : MonoBehaviour
     {
         if (MapButtonEffect.bossCanClick == true)
         {
-            BattleManage.isboss = true;
+            //BattleManage.isboss = true;
             SceneManager.LoadScene("Fighting");
         }
     }

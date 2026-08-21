@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Defence : MonoBehaviour
+public class Defence : CardEffect
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void cardEffect()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        battleManage.PlayerGetSheild(11);
     }
 }

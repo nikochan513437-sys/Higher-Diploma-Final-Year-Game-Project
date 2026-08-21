@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811ca0398c9bb734bbe2d3565fe7871c, type: 3}
+  m_Name: NormalEnemyList
+  m_EditorClassIdentifier: 
+  List:
+  - {fileID: 3717920088888612706, guid: dbc8a7a484a6ca64c81a530791f5e163, type: 3}
+  - {fileID: 2273193059317036079, guid: 0c3a656bf29788744b694d2b06a38e99, type: 3}
+  - {fileID: 8638956596217012913, guid: 3ebcae135f712ab4da6ff637c41f09cc, type: 3}
+  - {fileID: 7395922785362777420, guid: 6c4202cc5c6e9be4cb0985cedf38dbad, type: 3}
+  - {fileID: 77321586058159841, guid: 374ee10df91b64443a64fb66c1e21330, type: 3}

@@ -21,13 +21,20 @@ public class EnemyAnim : MonoBehaviour
 
     public void PlayHurtAnim()
     {
-        Debug.Log("play hurt anim");
-        anim.SetTrigger("getHit");
+        if (anim != null)
+        {
+            Debug.Log("play hurt anim");
+            anim.SetTrigger("getHit");
+        }
     }
 
     public void PlayAtkAnim()
     {
-        Debug.Log("play atk anim");
-        anim.SetTrigger("attack");
+        if ( anim != null)
+        {
+            Debug.Log("play atk anim");
+            anim.SetTrigger("attack");
+        }
+       
     }
 }

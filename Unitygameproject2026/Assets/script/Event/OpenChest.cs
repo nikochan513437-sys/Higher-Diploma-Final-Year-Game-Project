@@ -7,7 +7,6 @@ public class OpenChest : MonoBehaviour
 {
     private Animator anim;
     public GameObject chestOpen;
-    public GameObject equipment;
 
     void Start()
     {
@@ -24,7 +23,5 @@ public class OpenChest : MonoBehaviour
     {
         gameObject.SetActive(false);
         chestOpen.SetActive(true);
-        equipment.SetActive(true);
-        equipment.transform.DOMove(new Vector3(0.2f, 1.68f, 0),1f);
     }
 }

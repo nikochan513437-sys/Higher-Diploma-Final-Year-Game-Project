@@ -10,7 +10,8 @@ public class BattleManage : MonoBehaviour
     //to manage battle
     public static bool inBattle = false;
     //save turn stage using int variable
-    public static int turnState = 0;//turnState=1(turnStart),turnState=2(inturn),turnState=3(turnEnd),turnState=4(enemyStart),turnState=5(enemyEnd)
+    public static int turnState = 0;
+    //turnState=1(turnStart),turnState=2(inturn),turnState=3(turnEnd),turnState=4(enemyStart),turnState=5(enemyEnd)
     //player health and max health
     public static int Health=0;
     public static int MaxHealth = 0;
@@ -27,20 +28,26 @@ public class BattleManage : MonoBehaviour
     public static int E4=0;
     //battle round
     public static int round = 0;
-    public static bool isboss;
 
-    public static int atknum = 0;
-    public static int defnum=0;
+    public GameObject dodge;
+    public static GameObject dodge1;
+    public static bool resetState;
+    public static bool isDodge;
 
-    public GameObject enenmy;
-    public GameObject boss;
+    public Canvas canvas;
+    public GameObject MainCam;
     public ModuleInventory Equip;
     public GameObject endGame;
     public GameObject winPanel;
     public GameObject deadPanel;
-    public Text intentionTXT;
-    public GameObject atkIntention;
-    public GameObject defIntention;
+    public GameObject skipButton;
+    public GameObject ATKIntention;
+    public GameObject ATKIntentionNum;
+    public GameObject DEFIntention;
+    public GameObject DEFIntentionNum;
+    public GameObject STUNIntention;
+    public GameObject BUFFIntention;
+    public GameObject DEBUFFIntention;
     public static GameObject end;
     public static GameObject win;
     public static GameObject dead;
@@ -53,24 +60,22 @@ public class BattleManage : MonoBehaviour
     public ModuleSlot slot4;
     public ModuleSlot slot5;
     public ModuleSlot slot6;
+    public GameEnemy enemy;
+
+    //public GameObject resultPanel;
+
+    public List<CardEffect> cardEffects = new List<CardEffect>();
     void Start()
     {
-        if (isboss)
-        {
-            //if battle is boss
-            enenmy.SetActive(false);
-            boss.SetActive(true);
-        }
-        else
-        {
-            //if battle not boss
-            enenmy.SetActive(true);
-            boss.SetActive(false);
-        }
+        MainCam=GameObject.Find("Main Camera-GameMap");
+        //resultPanel = GameObject.Find("ResultPanel");
+        MainCam.SetActive(false);
+        if (DeveloperMode.isDeveloper)
+            skipButton.SetActive(DeveloperMode.isDeveloper);
         //setup
         end = endGame;
         win = winPanel;
-        dead = deadPanel ;
+        dead = deadPanel;
         win.SetActive(false);
         dead.SetActive(false);
         end.SetActive(false);
@@ -91,6 +96,7 @@ public class BattleManage : MonoBehaviour
         MaxE3 = 0;
         MaxE4 = 0;
         calculateEnergy();
+        GenerateDodgeUI();
     }
     void Update()
     {
@@ -105,6 +111,7 @@ public class BattleManage : MonoBehaviour
         }
         if (turnState == 2)
         {
+            
         }
         if (turnState == 3)
         {
@@ -112,21 +119,13 @@ public class BattleManage : MonoBehaviour
         }
         if(turnState == 4)
         {
-            if (isboss)
-            {
-                Enemy.BossAction();
-            }
-            else
-            {
-                Enemy.EnemyAction();
-            }
+            enemy.EnemyAction();
             nextTurnState();
         }
-        if( turnState == 5)
+        if(turnState == 5)
         {
             nextTurnState();
             round++;
-            changeIntention();
         }
         updateHealth.UpdateH();
         updateSheild.UpdateS();
@@ -134,10 +133,16 @@ public class BattleManage : MonoBehaviour
     }
     public void StartBattle()
     {
+        enemy = Object.FindAnyObjectByType<GameEnemy>();
         nextTurnState();
     }
     public void ButtonTurnEnd()
     {
+        Debug.Log("Card List length:"+cardEffects.Count);
+        for (int i = 0 ; i < cardEffects.Count; i++) {
+            cardEffects[i].cardEffect();
+        }
+        cardEffects.Clear();
         if (turnState == 2)
         {
             nextTurnState();
@@ -146,12 +151,15 @@ public class BattleManage : MonoBehaviour
     public void TurnStart()
     {
         //show turn start
+        enemy.EnemyActionShow();
         getTurnStartEnergy();
         nextTurnState();
+        //ModuleUseEquip.useDodge = 0;
     }
     public void TurnEnd()
     {
         Debug.Log("Turn end");
+        StatusSettlement();
         nextTurnState();
     }
     public void nextTurnState()
@@ -164,6 +172,7 @@ public class BattleManage : MonoBehaviour
         }
         Debug.Log("Turn State=" + turnState);
     }
+
     public void calculateEnergy()
     {
         for (int i = 0; i < 6; i++)
@@ -199,30 +208,92 @@ public class BattleManage : MonoBehaviour
         }
         return sum;
     }
-    public static void EndBattle()
+
+    public void StatusSettlement() {
+        if (Overheat.playerOverheatNum > 0)
+        {
+            PlayerLostHealth(Overheat.getPlayerOverheatDmg());
+            Overheat.playerOverheatNum /= 2;
+        }
+        if (Overheat.enemyOverheatNum > 0)
+        {
+            enemy.EnemyLostHealth(Overheat.getEnemyOverheatDmg());
+            Overheat.enemyOverheatNum /= 2;
+        }
+        if (Emp.playerEmpNum > 0) {
+            Emp.playerEmpNum--;
+        }
+        if (Emp.enemyEmpNum > 0)
+        {
+            Emp.enemyEmpNum--;
+        }
+    }
+
+    public void EndBattle()
     {
+        Debug.Log("Battle End");
+        int coin = 100;
+        float healthPercentage = (float)Health / MaxHealth;
+        int baseCoin = Mathf.RoundToInt(coin * healthPercentage);
+        float bonusPercentage;
+        if (round > 20) 
+        {
+            bonusPercentage = 0f;
+        }
+        else 
+        {
+            bonusPercentage = 1 - (Mathf.Pow((float)round - 1, 2) / 400);
+        }
+        int bounsCoin = Mathf.RoundToInt(coin * bonusPercentage);
+        Debug.Log(baseCoin +" " + bounsCoin);
         inBattle = false;
-        SceneManager.LoadScene("TutorialMap");
+        MainCam.SetActive(true);
+        Overheat.Reset();
+        Charge.Reset();
+        Emp.Reset();
+        Power.Reset();
+        Void.Reset();
+        SceneManager.UnloadSceneAsync("Fighting");
+        GameManage.ResultPanel(baseCoin, bounsCoin);
     }
     public static void EndGame()
     {
         end.SetActive(true);
+        win.SetActive(true);
     }
 
-    public static void PlayerGetHeal(int health)
+    public void PlayerGetHeal(int health)
     {
         //use when heal
         Health += health;
     }
-    public static void PlayerGetDamage(int damage)
+    public void PlayerGetDamage(int damage)
     {
+        /*
         if (EnemyAnim.instance != null && EnemyAnim.instance.gameObject.activeSelf)
             EnemyAnim.instance.PlayAtkAnim();
         if (BossAnim.instance != null && BossAnim.instance.gameObject.activeSelf)
             BossAnim.instance.PlayAtkAnim();
+        */
+
+       
+
+        if (isDodge)
+        {
+            Debug.Log("dodge");
+            OnDodge.onDodge();
+            isDodge = false;
+            return;
+        }
 
         //use when get damage
         int count = damage;
+
+        if (Emp.playerEmpNum > 0)
+        {
+            count = (int)(count * 0.75);
+        }
+
         if (Sheild > 0)
         {
             if (count < Sheild)
@@ -248,56 +319,36 @@ public class BattleManage : MonoBehaviour
             //end game;
         }
     }
-    public static void PlayerLostHealth(int lost)
+    public void PlayerLostHealth(int lost)
     {
         //use when lost health
         Health -= lost;
         if (Health <= 0)
         {
+            dead.SetActive(true);
+            EndGame();
+            ResetTutorial();
             //end game;
         }
     }
-    public static void PlayerCauseDamage(int damage)
+    public void PlayerCauseDamage(int damage)
     {
-        //use when make damage
-        int count = damage;
-        if (Enemy.EnemySheild > 0)
+        int dmg = damage;
+        dmg += Power.playerPowerNum;
+        dmg += Void.enemyVoidNum;
+
+        if (Emp.playerEmpNum > 0)
         {
-            if (count < Enemy.EnemySheild)
-            {
-                //damage<sheild
-                Enemy.EnemySheild -= count;
-                count = 0;
-            }
-            else
-            {
-                //damage>=sheild
-                count -= Enemy.EnemySheild;
-                Enemy.EnemySheild = 0;
-            }
+            dmg = (int)(dmg * 0.75);
         }
+        enemy.EnemyTakeDamage(dmg);
         AudioClipPlay.PlayClipATK();
-        Enemy.EnemyHealth -= count;
-        if (Enemy.EnemyHealth <= 0)
-        {
-            if (isboss)
-            {
-                win.SetActive(true);
-                EndGame();
-                ResetTutorial();
-            }
-            else
-            {
-                EndBattle();
-            }
-            //end game;
-        }
     }
-    public static void PlayerGetSheild(int sheild)
+    public void PlayerGetSheild(int sheild)
     {
         //use when get sheild
-        AudioClipPlay.PlayClipGetShield();
         Sheild += sheild;
+        AudioClipPlay.PlayClipGetShield();
     }
     public void getTurnStartEnergy()
     {
@@ -354,43 +405,70 @@ public class BattleManage : MonoBehaviour
         }
     }
 
-    public void changeIntention() {
-        if (isboss)
+    public void resetIntention()
+    {
+        ATKIntention.SetActive(false);
+        ATKIntentionNum.SetActive(false);
+        DEFIntention.SetActive(false);
+        DEFIntentionNum.SetActive(false);
+        STUNIntention.SetActive(false);
+        BUFFIntention.SetActive(false);
+        DEBUFFIntention.SetActive(false);
+    }
+    public void changeATKIntention(string txt)
+    {
+        ATKIntention.SetActive(true);
+        ATKIntentionNum.SetActive(true);
+        ATKIntentionNum.GetComponent<Text>().text = txt;
+        //atkIntention.SetActive(true);
+        //defIntention.SetActive(false);
+        //intentionNum.SetActive(true);
+        //intentionText.text = num.ToString();
+    }
+    public void changeDEFIntention(string txt)
+    {
+        DEFIntention.SetActive(true);
+        DEFIntentionNum.SetActive(true);
+        DEFIntentionNum.GetComponent<Text>().text = txt;
+        //atkIntention.SetActive(false);
+        //defIntention.SetActive(true);
+        //intentionNum.SetActive(true);
+        //intentionText.text = num.ToString();
+    }
+    public void changeBuffIntention()
+    {
+        BUFFIntention.SetActive(true);
+    }
+    public void changeDebuffIntention()
+    {
+        DEBUFFIntention.SetActive(true);
+    }
+    public void changeStunIntention()
+    {
+        STUNIntention.SetActive(true);
+    }
+
+    public void GenerateDodgeUI() {
+        if (SetEquipment.isEquipped)
         {
-            if (round % 3 == 0 || round % 3 == 1)
-            {
-                atkIntention.SetActive(true);
-                defIntention.SetActive(false);
-                intentionTXT.text = atknum.ToString();
-            }
-            else
-            {
-                atkIntention.SetActive(false);
-                defIntention.SetActive(true);
-                intentionTXT.text = defnum.ToString();
-            }
-        }
-        else
-        {
-            if (round % 2 == 0)
-            {
-                atkIntention.SetActive(true);
-                defIntention.SetActive(false);
-                intentionTXT.text = atknum.ToString();
-            }
-            else
-            {
-                atkIntention.SetActive(false);
-                defIntention.SetActive(true);
-                intentionTXT.text = defnum.ToString();
-            }
+            GameObject dodgeObj = Instantiate(dodge, canvas.transform);
+            RectTransform dodgeTrans = dodgeObj.GetComponent<RectTransform>();
+            dodgeTrans.anchoredPosition = new Vector2(-800, 200);
+            dodge1 = dodgeObj;
         }
     }
 
     public static void ResetTutorial() {
-        isboss = false;
         MapButtonEffect.enemyCanClick = true;
         MapButtonEffect.eventCanClick = false;
         MapButtonEffect.bossCanClick = false;
+    }
+
+    public void SkipBattle() {
+        enemy.EnemyLostHealth(enemy.maxhealth);
+    }
+
+    public void RegisterCardEffect(CardEffect effect) { 
+        cardEffects.Add(effect);
     }
 }

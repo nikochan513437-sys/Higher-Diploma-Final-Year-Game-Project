@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebe09dc3829658844b1a1a5b4774d3f0, type: 3}
+  m_Name: Tesla Coil Cannon
+  m_EditorClassIdentifier: 
+  moduleName: Tesla Coil Cannon
+  moduleImage: {fileID: 21300000, guid: 2f5504b281f400c408f89ffb1448009a, type: 3}
+  cardRarity: common
+  moduleInfo: "Module type:ATK\nATK:12\nConsume 1 charge: Deal +8 extra damage for
+    each Charge.\nArmor(Health):0\nEnergy type:eletric\nCost Energy number:1\nRight
+    Click On Battle To Get Card\r"
+  moduleType: ATK
+  moduleArmor: 0
+  moduleEnergyLevel: 1
+  moduleEnergyNumber: 1
+  willGiveCard: 1
+  giveCardNo: 9

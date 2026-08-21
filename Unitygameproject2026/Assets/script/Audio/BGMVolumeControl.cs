@@ -12,6 +12,7 @@ public class BGMVolumeControl : MonoBehaviour
     public AudioClip mapBGM;
     public AudioClip fightingBGM;
     public AudioClip eventBGM;
+    public AudioClip shopBGM;
     public static BGMVolumeControl Instance;
 
     void Awake()
@@ -49,6 +50,10 @@ public class BGMVolumeControl : MonoBehaviour
         }
         else if (scene.name == "Event") {
             PlayBGM(eventBGM);
+        }
+        else if (scene.name == "Shop")
+        {
+            PlayBGM(shopBGM);
         }
     }
 

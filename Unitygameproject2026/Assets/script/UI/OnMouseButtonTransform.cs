@@ -10,6 +10,8 @@ public class OnMouseButtonTransform : MonoBehaviour
     float scaleX;
     float scaleY;
     float scaleZ;
+    public float scopeSizeX;
+    public float scopeSizeY;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +30,7 @@ public class OnMouseButtonTransform : MonoBehaviour
     {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            transform.localScale = new Vector3(scaleX + 0.05f, scaleY + 0.05f, scaleZ);
+            transform.localScale = new Vector3(scaleX + scopeSizeX, scaleY + scopeSizeY, scaleZ);
         }
     }
     void OnMouseExit()

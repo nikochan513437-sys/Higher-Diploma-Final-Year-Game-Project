@@ -8,14 +8,15 @@ public class MapButtonEffect : MonoBehaviour
     public GameObject equipPanel, escPanel, dialog;
     public string loadto;
     public static bool enemyCanClick = true;
-    public static bool eventCanClick = false;
+    public static bool eventCanClick = true;
     public static bool shopCanClick = false;
     public static bool bossCanClick = false;
+   
 
     void Start()
     {
-        equipPanel = Canvas1.instance.transform.Find("Inventory-EquipPanel").gameObject;
-        escPanel = Canvas1.instance.transform.Find("EscPanel").gameObject;
+        equipPanel = Canvas1Spawn.instance.transform.Find("Inventory-EquipPanel").gameObject;
+        escPanel = Canvas1Spawn.instance.transform.Find("EscPanel").gameObject;
 
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         Color nowColor = sr.color;
@@ -46,7 +47,7 @@ public class MapButtonEffect : MonoBehaviour
             {
                 enemyCanClick = false;
                 eventCanClick = true;
-                BattleManage.isboss = false;
+                //BattleManage.isboss = false;
                 SceneManager.LoadScene(loadto);
             }
             if (gameObject.name == "Button-Event" && eventCanClick)
